@@ -2,6 +2,23 @@
 
 All notable changes to PruneMate will be documented in this file.
 
+## [V1.3.2] - January 2026
+
+### Fixed
+- 🐛 **External Docker hosts edit/delete/toggle bug** - Fixed critical issue preventing users from modifying external hosts
+  - Fixed incorrect index calculation in editHost() function that caused edit prompt issues
+  - Fixed index mismatch between full hosts array (including Local) and docker_hosts array
+  - Now correctly uses displayIndex for API calls to external hosts
+  - Confirmed working: add host ✓, edit host ✓, delete host ✓, toggle host ✓
+  - No migration needed - fully backward compatible with existing configurations
+
+### Changed  
+- 🧹 **Code cleanup** - Improved code quality and removed redundant logic
+  - Removed redundant auto_save parameter check in Python
+  - Improved DOM cleanup in JavaScript host management functions
+  - Added input field clearing after successful host addition
+  - Enhanced HTML injection protection with proper escaping in addNewHost()
+
 ## [V1.3.1] - December 2025
 
 ### Added

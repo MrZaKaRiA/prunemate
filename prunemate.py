@@ -764,7 +764,7 @@ def _send_telegram(cfg: dict, title: str, message: str, priority: str = "medium"
         data=payload,
         headers={
             "Content-Type": "application/json",
-            "User-Agent": "PruneMate/1.3.0 (Docker cleanup bot)"
+            "User-Agent": "PruneMate/1.3.2 (Docker cleanup bot)"
         },
         method="POST"
     )
@@ -1982,7 +1982,7 @@ def add_host():
     
     name = (request.form.get("name") or "").strip()
     url = (request.form.get("url") or "").strip()
-    enabled = "enabled" in request.form
+    enabled = request.form.get("enabled") == "on"
     
     if not name or not url:
         flash("Host name and URL are required.", "warn")
@@ -2022,7 +2022,7 @@ def update_host(index):
     
     name = (request.form.get("name") or "").strip()
     url = (request.form.get("url") or "").strip()
-    enabled = "enabled" in request.form
+    enabled = request.form.get("enabled") == "on"
     
     if not name or not url:
         flash("Host name and URL are required.", "warn")

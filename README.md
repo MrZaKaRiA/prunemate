@@ -8,7 +8,7 @@
 <p align="center"><em>Docker image & resource cleanup helper, on a schedule!</em></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.3.1-purple?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/version-1.3.2-purple?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/python-3.12-yellow?style=for-the-badge&logo=python&logoColor=ffffff"/>
   <img src="https://img.shields.io/badge/docker-compose-0db7ed?style=for-the-badge&logo=docker&logoColor=ffffff"/>
   <img src="https://img.shields.io/badge/license-AGPLv3-orange?style=for-the-badge"/>
@@ -48,12 +48,10 @@ A sleek, lightweight web interface to **automatically clean up Docker resources*
 
 ---
 
-## 📋 What's New in V1.3.1
+## 📋 What's New in V1.3.2
 
-- 🔀 **Schedule Enable/Disable Toggle** - Run manual cleanups only without scheduled automation
-- 🏗️ **Multi-Architecture Support** - Docker images now support amd64 and arm64 out of the box
-- 🏠 **Fixed Homepage Widget Integration** - Stats endpoints work correctly when authentication is enabled
-- 📦 **Improved Docker Compose** - Pre-built multi-arch image by default, no local builds needed
+- 🐛 **Bug fixes** - Fixed critical issue preventing users from modifying external hosts
+- 🧹 **Code cleanup** - Improved code quality and removed redundant logic
 
 See [CHANGELOG.md](./CHANGELOG.md) for complete release notes.
 
@@ -537,7 +535,7 @@ The `/api/stats` endpoint returns the following fields:
 | Problem | Solution |
 |---------|----------|
 | ❌ Can't access web interface | • Check if port 7676 is available and not blocked by firewall<br>• Verify container is running: `docker ps`<br>• Check logs: `docker logs prunemate` |
-| 🏗️ ARM architecture error | • V1.3.1+: Image now has native multi-architecture support (amd64 + arm64)<br>• Pull `anoniemerd/prunemate:latest` - it will auto-detect your platform<br>• No local build required anymore!<br>• If running older versions, use `build: .` in docker-compose.yaml |
+| 🏗️ ARM architecture error | • Since V1.3.1+: Image now has native multi-architecture support (amd64 + arm64)<br>• Pull `anoniemerd/prunemate:latest` - it will auto-detect your platform<br>• No local build required anymore!<br>• If running older versions, use `build: .` in docker-compose.yaml |
 | ⚙️ Container not starting | • View startup errors: `docker logs prunemate`<br>• Verify Docker socket is accessible<br>• Check if port 7676 is already in use |
 | 🔒 Permission denied errors | • Ensure `/var/run/docker.sock` exists and is accessible<br>• On Linux, Docker daemon must be running<br>• User running Docker must have proper permissions |
 | 🕐 Wrong timezone in logs/schedule | • Set `PRUNEMATE_TZ` environment variable correctly<br>• Restart container after changing: `docker-compose restart`<br>• Verify timezone in logs matches expected |
@@ -560,34 +558,23 @@ The `/api/stats` endpoint returns the following fields:
 
 ## 📜 Release Notes
 
-## [V1.3.1] - December 2025
-
-### Added
-- 🔀 **Schedule enable/disable toggle** - New UI toggle to control automatic scheduling
-  - "Enable automatic schedule" switch in Schedule section
-  - Allows running manual cleanups only without affecting scheduled runs
-  - Scheduler still heartbeats every minute but skips execution when disabled
-  - Setting persists in config.json and defaults to enabled for existing installations
-- 🏗️ **Multi-architecture Docker image support** - Build once, run anywhere
-  - Native support for amd64 and arm64 architectures
-  - Works seamlessly on Intel/AMD, Raspberry Pi 4/5, Apple Silicon M1/M2/M3, and ARM-based NAS
-  - Docker Buildx multi-platform builds for efficient distribution
-  - No more local builds required for ARM systems
-  - Single docker-compose.yaml works on all architectures
+## [V1.3.2] - January 2026
 
 ### Fixed
-- 🏠 **Homepage widget integration with authentication** - Stats endpoints now work with auth enabled
-  - `/stats` and `/api/stats` endpoints accessible without authentication
-  - Required for Homepage and Dashy widgets to display statistics when login is enabled
-  - Backward compatible: endpoints contain non-sensitive Docker cleanup statistics only
-- 📊 **Schedule configuration logging** - Added `schedule_enabled` to effective config output
-  - Proper logging of all schedule settings including new toggle
+- 🐛 **External Docker hosts edit/delete/toggle bug** - Fixed critical issue preventing users from modifying external hosts
+  - Fixed incorrect index calculation in editHost() function that caused edit prompt issues
+  - Fixed index mismatch between full hosts array (including Local) and docker_hosts array
+  - Now correctly uses displayIndex for API calls to external hosts
+  - Confirmed working: add host ✓, edit host ✓, delete host ✓, toggle host ✓
+  - No migration needed - fully backward compatible with existing configurations
+
 
 ### Changed
-- 📦 **Docker Compose default** - Changed from local build to pre-built multi-arch image
-  - docker-compose.yaml now uses `image: anoniemerd/prunemate:latest` by default
-  - Auto-detects correct architecture (amd64/arm64) at pull time
-  - Significantly faster deployment and smaller initial setup
+- 🧹 **Code cleanup** - Improved code quality and removed redundant logic
+  - Removed redundant auto_save parameter check in Python
+  - Improved DOM cleanup in JavaScript host management functions
+  - Added input field clearing after successful host addition
+  - Enhanced HTML injection protection with proper escaping in addNewHost()
 
 📖 **[View full changelog](CHANGELOG.md)**
 
@@ -667,7 +654,7 @@ Always:
 - ✅ Review logs after prune operations
 - ✅ Start with conservative settings
 
-© 2025 – PruneMate Project
+© 2026 – PruneMate Project
 
 ---
 

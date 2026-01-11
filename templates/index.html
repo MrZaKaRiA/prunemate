@@ -845,7 +845,7 @@
 
     <!-- Application footer -->
     <div class="footer">
-      PruneMate · 2025 · V1.3.1 ·
+      PruneMate · 2026 · V1.3.2 ·
       <a href="https://github.com/anoniemerd/PruneMate" target="_blank">GitHub</a>
     </div>
   </div>
@@ -1212,8 +1212,9 @@
           hostsList.innerHTML = '';
           
           externalHosts.forEach((host, displayIndex) => {
-            // Find original index in full hosts array for API calls
-            const originalIndex = hosts.findIndex(h => h.name === host.name && h.url === host.url);
+            // Calculate correct index for API calls (external hosts are in docker_hosts array, not including Local)
+            // The API expects index in docker_hosts, so we need index of external host, not full hosts array
+            const originalIndex = displayIndex;
             
             const hostDiv = document.createElement('div');
             hostDiv.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px;background:rgba(14,165,233,0.04);border:1px solid var(--card-border);border-radius:10px;margin-bottom:8px;';
@@ -1320,39 +1321,27 @@
     // Edit host (prompt for new values) - Config auto-saves after update
     function editHost(index, host){
       const newName = prompt('Host name:', host.name);
-      if (!newName || newName === host.name) {
-        // Check if URL should be updated
-        const newUrl = prompt('Host URL:', host.url);
-        if (!newUrl) return;
-        
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `/hosts/${index}/update`;
-        form.innerHTML = `
-          <input type="hidden" name="name" value="${host.name}">
-          <input type="hidden" name="url" value="${newUrl}">
-          <input type="hidden" name="enabled" value="${host.enabled ? 'on' : ''}">
-          <input type="hidden" name="auto_save" value="1">
-        `;
-        document.body.appendChild(form);
-        form.submit();
-        return;
-      }
+      if (newName === null) return; // User cancelled
       
       const newUrl = prompt('Host URL:', host.url);
-      if (!newUrl) return;
+      if (newUrl === null) return; // User cancelled
+      
+      // Only submit if at least one value changed
+      if (newName === host.name && newUrl === host.url) return;
       
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = `/hosts/${index}/update`;
       form.innerHTML = `
-        <input type="hidden" name="name" value="${newName}">
-        <input type="hidden" name="url" value="${newUrl}">
+        <input type="hidden" name="name" value="${newName.replace(/"/g, '&quot;')}">
+        <input type="hidden" name="url" value="${newUrl.replace(/"/g, '&quot;')}">
         <input type="hidden" name="enabled" value="${host.enabled ? 'on' : ''}">
         <input type="hidden" name="auto_save" value="1">
       `;
       document.body.appendChild(form);
       form.submit();
+      // Clean up form element (though page will reload)
+      setTimeout(() => form.remove(), 100);
     }
 
     // Delete host with confirmation - Config auto-saves after deletion
@@ -1365,6 +1354,8 @@
       form.innerHTML = '<input type="hidden" name="auto_save" value="1">';
       document.body.appendChild(form);
       form.submit();
+      // Clean up form element (though page will reload)
+      setTimeout(() => form.remove(), 100);
     }
 
     // Add new host from the form - Config auto-saves after adding
@@ -1384,13 +1375,17 @@
       form.method = 'POST';
       form.action = '/hosts/add';
       form.innerHTML = `
-        <input type="hidden" name="name" value="${name}">
-        <input type="hidden" name="url" value="${url}">
+        <input type="hidden" name="name" value="${name.replace(/"/g, '&quot;')}">
+        <input type="hidden" name="url" value="${url.replace(/"/g, '&quot;')}">
         <input type="hidden" name="enabled" value="on">
         <input type="hidden" name="auto_save" value="1">
       `;
       document.body.appendChild(form);
       form.submit();
+      // Clean up form element and clear inputs (though page will reload)
+      setTimeout(() => form.remove(), 100);
+      nameInput.value = '';
+      urlInput.value = '';
     }
 
     // Manage collapsible Docker hosts panel
