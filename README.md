@@ -18,6 +18,9 @@
   <a href="https://www.buymeacoffee.com/anoniemerd">
     <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee"/>
   </a>
+  <a href="https://prunemate.org">
+  <img src="https://img.shields.io/badge/Visit-Website-0ea5e9?style=for-the-badge&logo=internet-explorer&logoColor=white" alt="Website"/>
+  </a>
 </p>
 
 A sleek, lightweight web interface to **automatically clean up Docker resources** on a schedule. Built with Python (Flask) · Docker SDK · APScheduler · Gunicorn
