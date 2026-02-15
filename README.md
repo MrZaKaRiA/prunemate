@@ -50,15 +50,6 @@ A sleek, lightweight web interface to **automatically clean up Docker resources*
 
 ---
 
-## 📋 What's New in V1.3.2
-
-- 🐛 **Bug fixes** - Fixed critical issue preventing users from modifying external hosts
-- 🧹 **Code cleanup** - Improved code quality and removed redundant logic
-
-See [CHANGELOG.md](./CHANGELOG.md) for complete release notes.
-
----
-
 ## 📷 Screenshots
 
 ### Main Dashboard
