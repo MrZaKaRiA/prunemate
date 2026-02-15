@@ -18,7 +18,7 @@
   <a href="https://www.buymeacoffee.com/anoniemerd">
     <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee"/>
   <a href="https://prunemate.org">
-    <img src="https://img.shields.io/badge/Website-prunemate.org-6f42c1?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Website"/>
+    <img src="https://img.shields.io/badge/Visit-Website-0ea5e9?style=for-the-badge&logo=internet-explorer&logoColor=white" alt="Website"/>
   </a>
 </p>
 
