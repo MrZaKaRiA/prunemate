@@ -63,7 +63,7 @@ See [CHANGELOG.md](./CHANGELOG.md) for complete release notes.
 The overall look and feel of the PruneMate dashboard
 
 <p align="center">
-  <img width="400" height="800" src="https://github.com/user-attachments/assets/863d7884-5da1-4f5b-b3cc-33cffd32f931" />
+  <img width="400" height="800" src="https://github.com/user-attachments/assets/845405f1-0787-4323-a592-36177e32a035" />
 </p>
 
 ### Authentication page
