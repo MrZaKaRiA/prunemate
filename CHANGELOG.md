@@ -2,6 +2,11 @@
 
 All notable changes to PruneMate will be documented in this file.
 
+## [V1.3.3] - February 2026
+
+### Changed  
+- 🏗️ **New info button** -  A new information button has been added to the newly launched Prunemate.org website.
+
 ## [V1.3.2] - January 2026
 
 ### Fixed

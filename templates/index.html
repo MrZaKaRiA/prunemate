@@ -235,6 +235,45 @@
       opacity:0.9;
     }
 
+    .btn-info {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      width: 36px;
+      height: 36px;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(4px);
+      z-index: 10;
+    }
+
+    /* Shift info button left when logout button is present */
+    .header-buttons.has-logout .btn-info {
+      right: 125px;
+    }
+
+    .btn-info:hover {
+      background: rgba(14, 165, 233, 0.1);
+      color: #7dd3fc;
+      border-color: rgba(14, 165, 233, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .btn-info svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+    }
+
     .btn-logout {
       position: absolute;
       top: 24px;
@@ -282,6 +321,7 @@
       .card.schedule .row.inline .field{width:100%;}
       .btn-logout span { display: none; }
       .btn-logout { padding: 8px; }
+      .header-buttons.has-logout .btn-info { right: 50px; }
     }
 
     /* Utility classes */
@@ -315,14 +355,23 @@
 
   <!-- Main application container -->
   <div class="container">
-    {% if session.get('logged_in') %}
-    <a href="{{ url_for('logout') }}" class="btn-logout" title="Logout">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-      </svg>
-      <span>Logout</span>
-    </a>
-    {% endif %}
+    <!-- Header buttons container -->
+    <div class="header-buttons {% if session.get('logged_in') %}has-logout{% endif %}">
+      <!-- Info button linking to website -->
+      <a href="https://prunemate.org" class="btn-info" target="_blank" rel="noopener noreferrer" title="Visit PruneMate Documentation">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </a>
+      {% if session.get('logged_in') %}
+      <a href="{{ url_for('logout') }}" class="btn-logout" title="Logout">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+        </svg>
+        <span>Logout</span>
+      </a>
+      {% endif %}
+    </div>
     <!-- Header with logo and title -->
     <div class="header">
       <div class="logo-wrap">
@@ -845,8 +894,9 @@
 
     <!-- Application footer -->
     <div class="footer">
-      PruneMate · 2026 · V1.3.2 ·
-      <a href="https://github.com/anoniemerd/PruneMate" target="_blank">GitHub</a>
+      PruneMate · 2026 · V1.3.3 · 
+      <a href="https://github.com/anoniemerd/PruneMate" target="_blank">GitHub</a> ·
+      <a href="https://prunemate.org" target="_blank">Prunemate.org</a>
     </div>
   </div>
 
